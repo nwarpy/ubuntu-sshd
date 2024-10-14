@@ -38,11 +38,11 @@ if [ -n "$SSHD_CONFIG_FILE" ] && [ -f "$SSHD_CONFIG_FILE" ]; then
     echo "Additional SSHD configuration from file applied"
 fi
 
-if [ ! -f /home/$SSH_USERNAME/.ssh/my_key ]; then
-    echo "/home/$SSH_USERNAME/.ssh/my_key not found, creating..."
-    ssh-keygen -t ed25519 -N "" -f /home/$SSH_USERNAME/.ssh/my_key
+if [ ! -f /home/$SSH_USERNAME/.ssh/id_ed25519 ]; then
+    echo "/home/$SSH_USERNAME/.ssh/id_ed25519 not found, creating..."
+    ssh-keygen -t ed25519 -N "" -f /home/$SSH_USERNAME/.ssh/id_ed25519
 fi
-cat /home/$SSH_USERNAME/.ssh/my_key.pub
+cat /home/$SSH_USERNAME/.ssh/id_ed25519.pub
 
 # Start the SSH server
 echo "Starting SSH server..."
