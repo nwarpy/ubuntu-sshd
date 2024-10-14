@@ -16,8 +16,6 @@ fi
 
 # Set the authorized keys from the AUTHORIZED_KEYS environment variable (if provided)
 mkdir -p /home/$SSH_USERNAME/.ssh
-chown -R $SSH_USERNAME:$SSH_USERNAME /home/$SSH_USERNAME
-chmod 700 /home/$SSH_USERNAME/.ssh
 if [ -n "$AUTHORIZED_KEYS" ]; then
     echo "$AUTHORIZED_KEYS" > /home/$SSH_USERNAME/.ssh/authorized_keys
     chmod 600 /home/$SSH_USERNAME/.ssh/authorized_keys
@@ -43,6 +41,12 @@ if [ ! -f /home/$SSH_USERNAME/.ssh/id_ed25519 ]; then
     ssh-keygen -t ed25519 -N "" -f /home/$SSH_USERNAME/.ssh/id_ed25519
 fi
 cat /home/$SSH_USERNAME/.ssh/id_ed25519.pub
+
+touch /home/$SSH_USERNAME/.bashrc
+
+# permissions
+chown -R $SSH_USERNAME:$SSH_USERNAME /home/$SSH_USERNAME
+chmod 700 /home/$SSH_USERNAME/.ssh
 
 # Start the SSH server
 echo "Starting SSH server..."
