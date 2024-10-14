@@ -1,0 +1,14 @@
+services:
+  ssh1:
+    build: .
+    pull_policy: build
+    ports:
+      - "12222:22"
+    volumes:
+      - ssh1_data:/home/user
+    environment:
+      SSH_USERNAME: "user"
+      SSH_PASSWORD: ""
+    container_name: ssh1
+volumes:
+  ssh1_data:

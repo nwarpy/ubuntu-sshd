@@ -8,7 +8,7 @@ ENV SSHD_CONFIG_ADDITIONAL=""
 
 # Install OpenSSH server, clean up, create directories, set permissions, and configure SSH
 RUN apt-get update \
-    && apt-get install -y iproute2 iputils-ping openssh-server telnet \
+    && apt-get install -y iproute2 iputils-ping openssh-server telnet git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && mkdir -p /run/sshd \
@@ -24,6 +24,9 @@ RUN apt-get update \
 # Copy the script to configure the user's password and authorized keys
 COPY configure-ssh-user.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/configure-ssh-user.sh
+
+# added
+RUN curl https://get.volta.sh | bash
 
 # Expose SSH port
 EXPOSE 22

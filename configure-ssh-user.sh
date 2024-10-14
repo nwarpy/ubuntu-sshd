@@ -15,8 +15,8 @@ else
 fi
 
 # Set the authorized keys from the AUTHORIZED_KEYS environment variable (if provided)
+mkdir -p /home/$SSH_USERNAME/.ssh
 if [ -n "$AUTHORIZED_KEYS" ]; then
-    mkdir -p /home/$SSH_USERNAME/.ssh
     echo "$AUTHORIZED_KEYS" > /home/$SSH_USERNAME/.ssh/authorized_keys
     chown -R $SSH_USERNAME:$SSH_USERNAME /home/$SSH_USERNAME/.ssh
     chmod 700 /home/$SSH_USERNAME/.ssh
@@ -37,6 +37,12 @@ if [ -n "$SSHD_CONFIG_FILE" ] && [ -f "$SSHD_CONFIG_FILE" ]; then
     cat "$SSHD_CONFIG_FILE" >> /etc/ssh/sshd_config
     echo "Additional SSHD configuration from file applied"
 fi
+
+if [ ! -f /home/$SSH_USERNAME/.ssh/my_key ]; then
+    echo "/home/$SSH_USERNAME/.ssh/my_key not found, creating..."
+    ssh-keygen -t ed25519 -N "" -f /home/$SSH_USERNAME/.ssh/my_key
+fi
+cat /home/$SSH_USERNAME/.ssh/my_key.pub
 
 # Start the SSH server
 echo "Starting SSH server..."
