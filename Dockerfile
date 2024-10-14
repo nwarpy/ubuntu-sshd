@@ -25,9 +25,6 @@ RUN apt-get update \
 COPY configure-ssh-user.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/configure-ssh-user.sh
 
-# added
-RUN curl https://get.volta.sh | bash
-
 # Expose SSH port
 EXPOSE 22
 
